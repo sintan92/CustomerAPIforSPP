@@ -10,10 +10,9 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class CustomerClient {
 
-    RestTemplate restTemplate;
-
     private final String GET_CUSTOMER_URL = "http://spp.se/soap-api/GetCustomer";
     private final String CREATE_CUSTOMER_URL = "http://spp.se/soap-api/CreateCustomer";
+    RestTemplate restTemplate;
 
     @Autowired
     public CustomerClient(RestTemplate restTemplate) {

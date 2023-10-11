@@ -50,7 +50,7 @@ public class CustomerController {
             @ApiResponse(responseCode = "400", description = "Validation error"),
             @ApiResponse(responseCode = "500", description = "Internal server error", content = {@Content(mediaType = "application/json")}),
     })
-    public ResponseEntity postEMessage(@RequestBody @Valid Customer customer) {
+    public ResponseEntity createCustomer(@RequestBody @Valid Customer customer) {
         try {
             Customer customerResponse = customerService.createCustomer(customer);
             return ResponseEntity.status(HttpStatus.CREATED).body(customerResponse);
