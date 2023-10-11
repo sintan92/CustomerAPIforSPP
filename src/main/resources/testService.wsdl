@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:tns="http://spp.se/soap-api" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			 xmlns:spp="http://spp.se/model"
+             name="CustomerService"
+             targetNamespace="http://spp.se/soap-api">
+    <types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://spp.se/model">
+
+
+            <xsd:complexType name="Customer">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="PersonOfficialId" nillable="true" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="LastUpdated" nillable="true" type="xsd:dateTime"/>
+                    <xsd:element minOccurs="0" name="FirstName" nillable="true" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="LastName" nillable="true" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="Address" nillable="true" type="xsd:string"/>
+                    <xsd:element minOccurs="0" name="PersonType" nillable="true">
+                        <xsd:simpleType>
+                            <xsd:restriction base="xsd:string">
+                                <xsd:enumeration value="LEGAL" />
+                                <xsd:enumeration value="PRIVATE"/>
+                            </xsd:restriction>
+                        </xsd:simpleType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+
+        </xsd:schema>
+    </types>
+    <message name="CreateCustomerRequest">
+        <part name="customer" type="spp:Customer"/>
+    </message>
+    <message name="CreateCustomerResponse">
+        <part name="result" type="xsd:string"/>
+    </message>
+    <message name="GetCustomer">
+        <part name="personOfficialId" type="xsd:string"/>
+    </message>
+    <message name="GetCustomerResponse">
+        <part name="result" type="spp:Customer"/>
+    </message>
+    <portType name="CustomerPortType">
+        <operation name="CreateCustomer">
+            <input message="tns:CreateCustomerRequest"/>
+            <output message="tns:CreateCustomerResponse"/>
+        </operation>
+        <operation name="GetCustomer">
+            <input message="tns:GetCustomer"/>
+            <output message="tns:GetCustomerResponse"/>
+        </operation>
+    </portType>
+    <binding name="CustomerBinding" type="tns:CustomerPortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="CreateCustomer">
+            <soap:operation soapAction="http://spp.se/soap-api/CreateCustomer"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="GetCustomer">
+            <soap:operation soapAction="http://spp.se/soap-api/GetCustomer"/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="CustomerService">
+        <port name="CustomerPort" binding="tns:CustomerBinding">
+            <soap:address location="http://spp.se/soap-api/CustomerService"/>
+        </port>
+    </service>
+</definitions>
